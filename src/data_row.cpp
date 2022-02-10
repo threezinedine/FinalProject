@@ -6,6 +6,7 @@
 #include <sensor_id_property.h>
 #include <length_property.h>
 #include <check_sum_property.h>
+#include <time_property.h>
 
 
 bool DataRow :: isCSVData(string inputStr){
@@ -48,6 +49,14 @@ void DataRow :: setPropertiesWithTXT(string inputString) {
 
 DataRow :: DataRow(string inputStr, LogFile* logFile) {
     this->logFile = logFile;
+
+
+    this->properties.push_back(new SensorIDProperty(this->logFile));
+    this->properties.push_back(new TimeProperty(this->logFile));
+    this->properties.push_back(new TemperatureProperty(this->logFile));
+    this->properties.push_back(new HumidityProperty(this->logFile));
+    numProperties = this->properties.size();
+
     if (isCSVData(inputStr)){
         setPropertiesWithCSV(inputStr);
     }
@@ -104,12 +113,12 @@ string DataRow :: getSaveDataTXT() {
 }
 
 IProperty* DataRow :: getLength() {
-    int valLength = 8;
+    int valLength = 4;
 
     string result = "";
     for (IProperty* property: properties) {
         if (!property->isEmpty()) {
-            valLength += property->getNumByte() * 2;
+            valLength += property->getNumByte();
         }
     }
 

@@ -23,3 +23,7 @@ int hexStringToInt(string);
 string floatToHexString(float);
 
 float hexStringToFloat(vector<string>);
+
+string longToHexString(long);
+
+long hexStringToLong(vector<string>);

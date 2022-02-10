@@ -86,10 +86,7 @@ string floatToHexString(float valueFloat) {
 
     value.floatValue = valueFloat;
 
-    char hex[8];
-    sprintf(hex, "%lx", value.longValue);
-
-    return getStringWithZero((string)hex, 8);
+    return longToHexString(value.longValue);
 }
 
 float hexStringToFloat(vector<string> hexVectorString) {
@@ -99,6 +96,19 @@ float hexStringToFloat(vector<string> hexVectorString) {
         float floatValue;
     } value;
 
+    value.longValue = hexStringToLong(hexVectorString);
+    return value.floatValue;
+}
+
+string longToHexString(long value) {
+    char hex[8];
+    sprintf(hex, "%lx", value);
+
+    return getStringWithZero((string)hex, 8);
+}
+
+long hexStringToLong(vector<string> hexVectorString) {
+    string fullString;
     for (string s:hexVectorString) {
         fullString += s;
     }
@@ -106,6 +116,5 @@ float hexStringToFloat(vector<string> hexVectorString) {
     unsigned long longValue;
     istringstream converter {fullString};
     converter >> hex >> longValue;
-    value.longValue = (long)longValue;
-    return value.floatValue;
+    return (long)longValue;
 }

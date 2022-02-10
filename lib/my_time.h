@@ -1,25 +1,21 @@
 #pragma once
 #include<iostream>
 #include<string>
+#include<time.h>
 
 using namespace std;
 
 
 class MyTime {
     private: 
-        int year;
-        int month;
-        int day;
-        int hour;
-        int minute;
-        int second;
-
-        void setTimeByTimeT(tm *time);
+        tm* time;
 
     public:
         MyTime();
         MyTime(long unix_num);
         MyTime(string fullTimeString);
+
+        long getUnixLongNumber();
 
         string getDateString(string joinString);
         string getDayTimeString(string joinString);

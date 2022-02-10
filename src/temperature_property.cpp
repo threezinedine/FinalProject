@@ -66,6 +66,7 @@ LogFile* TemperatureProperty :: getLogFile() {
 }
 
 void TemperatureProperty :: setValue(string value) {
+    empty = false;
     setValueFloat(stringToFloat(value));
 }
 

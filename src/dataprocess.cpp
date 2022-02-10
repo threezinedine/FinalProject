@@ -15,6 +15,12 @@
 #include <command_line_handlder.h>
 #include <container.h>
 #include <temperature_property.h>
+#include <time.h>
+#include <ctime>
+#include <time_operation.h>
+#include <my_time.h>
+#include <chrono>
+#include <time_property.h>
 
 using namespace std;
 
@@ -23,7 +29,7 @@ int main(int args, char* argv[]) {
     // Container mainContainer = Container(args, argv);
     // mainContainer.transfer();
     // mainContainer.getLogFile().save();
-    // LogFile *logFile = new LogFile("input.txt", "output.txt");
+    LogFile *logFile = new LogFile("input.txt", "output.txt");
 
     // IMessage *msg1 = new ErrorMessage("01", "Input file cannot be read.");
     // IMessage *msg2 = new WarningMessage("02", "The output file exists.");
@@ -67,4 +73,19 @@ int main(int args, char* argv[]) {
     // temperature->setHexValue("41 99 5c 29");
     // cout << temperature->getHexValue();
     // cout << endl << "Value: " << temperature->getValue();
+
+    // MyTime* time = new MyTime("2020-12-31 17:00:00");
+    // // MyTime* time = new MyTime("2020-07-23 9:52:36");
+
+    // cout << time->getFullTimeString();
+    // cout << endl << time->getUnixLongNumber();
+
+    // MyTime* time2 = new MyTime(1609408800);
+    // cout << endl << time2->getFullTimeString();
+    // cout << endl << time2->getUnixLongNumber();
+    // cout << "Ok" << endl;
+    // IProperty* time = new TimeProperty(logFile);
+    // cout << "ok" << endl;
+    // time->setValue("2020-12-31 17:00:00");
+    // cout << time->getHexValue();
 }
