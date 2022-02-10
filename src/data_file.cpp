@@ -14,8 +14,8 @@ string DataFile :: getFileName() {
 bool DataFile :: warningFileExit() {
     cout << "The " + getFileName() + " exists. Do you wanna override: (y/n)";
 
-    string userInput;
-    cin >> userInput;
+    string userInput = "n";
+    // cin >> userInput;
 
     if (userInput == "y") {
         return true;
@@ -45,18 +45,7 @@ bool DataFile :: canReadData() {
 }
 
 bool DataFile :: isFileExist() {
-    try {
-        vector<string> data = readFile(getFileName());
-        if (data.size() != 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    catch (int non){
-        return false;
-    }
+    return false;
 }
 
 void DataFile :: save() {

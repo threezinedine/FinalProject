@@ -13,6 +13,7 @@
 #include <sensor_data_file.h>
 #include <binary_packet_file.h>
 #include <command_line_handlder.h>
+#include <container.h>
 
 using namespace std;
 
@@ -21,7 +22,7 @@ int main(int args, char* argv[]) {
     // Container mainContainer = Container(args, argv);
     // mainContainer.transfer();
     // mainContainer.getLogFile().save();
-    LogFile *logFile = new LogFile("input.txt", "output.txt");
+    // LogFile *logFile = new LogFile("input.txt", "output.txt");
 
     // IMessage *msg1 = new ErrorMessage("01", "Input file cannot be read.");
     // IMessage *msg2 = new WarningMessage("02", "The output file exists.");
@@ -51,10 +52,13 @@ int main(int args, char* argv[]) {
     // data->appendDataRow(dataRow2);
     // cout << data->getSaveDataTXT() << endl;
     // cout << data->getSaveDataCSV();
-    CommandLineHandler *commandLineHandler = new CommandLineHandler(args, argv, logFile);
-    IDataFile *input = new SensorDataFile(commandLineHandler->getInputFileName(), logFile);
-    Data* data = input->readData();
-    IDataFile *output = new BinaryPacketFile(commandLineHandler->getOputputFileName(), logFile);
-    output->getSaveString(data);
-    output->save();
+    // CommandLineHandler *commandLineHandler = new CommandLineHandler(args, argv, logFile);
+    // IDataFile *input = new SensorDataFile(commandLineHandler->getInputFileName(), logFile);
+    // Data* data = input->readData();
+    // IDataFile *output = new BinaryPacketFile(commandLineHandler->getOputputFileName(), logFile);
+    // output->getSaveString(data);
+    // output->save();
+    Container container = Container(args, argv);
+    container.transfer();
+    container.getLogFile()->save();
 }

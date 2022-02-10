@@ -37,6 +37,8 @@ string LogFile :: getCompleteMessage() {
 
 void LogFile :: save() {
     string saveString = getCompleteMessage();
-    writeFile(getFileName(), saveString);
+    if (saveString != "") {
+        writeFile(getFileName(), saveString);
+    }
 }
 

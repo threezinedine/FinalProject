@@ -6,12 +6,10 @@
 #include <error_message.h>
 
 
-CommandLineHandler :: CommandLineHandler(int args, char* argv[], LogFile* logFile) {
-    this->logFile = logFile;
+CommandLineHandler :: CommandLineHandler(int args, char* argv[]) {
     if (args < 3) {
         valid = false;
-        IMessage *msg = new ErrorMessage("05", "Invalid Command");
-        this->logFile->addMessage(msg);
+        msg = new ErrorMessage("05", "Invalid Command");
     }
     else if (args == 3){
         inputFile = string(argv[1]);
@@ -19,8 +17,7 @@ CommandLineHandler :: CommandLineHandler(int args, char* argv[], LogFile* logFil
     }
     else{
         valid = false;
-        IMessage *msg = new ErrorMessage("05", "Invalid Command");
-        this->logFile->addMessage(msg);
+        msg = new ErrorMessage("05", "Invalid Command");
     }
 }
 
@@ -44,8 +41,8 @@ bool CommandLineHandler :: isValidCommand() {
     return valid;
 }
 
-LogFile* CommandLineHandler :: getLogFile() {
-    return logFile;
+IMessage* CommandLineHandler :: getMsg() {
+    return msg;
 }
 
 bool CommandLineHandler :: isInputTXT() {
