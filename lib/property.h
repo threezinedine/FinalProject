@@ -27,4 +27,5 @@ class Property : public IProperty{
 
         virtual bool isEmpty() = 0;
         virtual int getSumStoreByte() = 0;
+        virtual int compareTo(IProperty* obj) = 0;
 };

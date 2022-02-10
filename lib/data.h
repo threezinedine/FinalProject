@@ -14,7 +14,7 @@ class Data{
     public:
         Data(LogFile* logFile);
         void appendDataRow(DataRow* dataRow);
-        void sort();
+        void sort(string sortType, bool ascendingOrder);
         string getSaveDataCSV();
         string getSaveDataTXT();
 };

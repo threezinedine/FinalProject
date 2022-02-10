@@ -79,3 +79,7 @@ bool CheckSumProperty :: isEmpty() {
 int CheckSumProperty :: getSumStoreByte() {
     return 0;
 }
+
+int CheckSumProperty :: compareTo(IProperty* obj) {
+    return 0;
+}

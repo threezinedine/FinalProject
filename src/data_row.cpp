@@ -127,3 +127,14 @@ IProperty* DataRow :: getCheckSum() {
     IProperty *newSumCheck = new CheckSumProperty(sum, logFile);
     return newSumCheck;
 }
+
+IProperty* DataRow :: getPropertyByIndex(int index) {
+    int i = 0;
+
+    for (IProperty *property: properties){
+        if (i == index) {
+            return property;
+        }
+        i ++;
+    }
+}

@@ -93,3 +93,16 @@ bool SensorIDProperty :: isEmpty() {
 int SensorIDProperty :: getSumStoreByte() {
     return valueInt;
 }
+
+int SensorIDProperty :: compareTo(IProperty* obj) {
+    int value = stringToInt(obj->getValue());
+    if (this->valueInt > value) {
+        return 1;
+    }
+    else if (this->valueInt == value) {
+        return 0;
+    }
+    else {
+        return -1;
+    }
+}

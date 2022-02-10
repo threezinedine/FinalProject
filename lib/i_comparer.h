@@ -1,8 +1,9 @@
+#pragma once
 #include <iostream>
 
 
-template <typename T>
+template <class T>
 class IComparer {
     public:
-        int compareTo(T obj) = 0;
-}
+        virtual int compareTo(T obj1, T obj2) = 0;
+};

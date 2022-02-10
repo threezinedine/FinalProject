@@ -10,7 +10,7 @@
 using namespace std;
 
 
-class DataRow {
+class DataRow{
     private:
         LogFile* logFile;
         vector<IProperty*> properties = {new SensorIDProperty(logFile), 
@@ -31,4 +31,5 @@ class DataRow {
         string getSaveDataTXT();
         IProperty* getLength();
         IProperty* getCheckSum();
+        IProperty* getPropertyByIndex(int);
 };

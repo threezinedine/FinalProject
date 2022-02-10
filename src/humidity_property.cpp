@@ -93,3 +93,16 @@ bool HumidityProperty :: isEmpty() {
 int HumidityProperty :: getSumStoreByte() {
     return valueInt;
 }
+
+int HumidityProperty :: compareTo(IProperty* obj) {
+    int value = stringToInt(obj->getValue());
+    if (this->valueInt > value) {
+        return 1;
+    }
+    else if (this->valueInt == value){
+        return 0;
+    }
+    else {
+        return -1;
+    }
+}

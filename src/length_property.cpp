@@ -81,3 +81,7 @@ bool LengthProperty :: isEmpty() {
 int LengthProperty :: getSumStoreByte() {
     return valueInt;
 }
+
+int LengthProperty :: compareTo(IProperty* obj) {
+    return 0;
+}

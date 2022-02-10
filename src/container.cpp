@@ -51,6 +51,7 @@ void Container :: transfer() {
             }
         }
 
+        data->sort("", true);
         output->getSaveString(data);
         output->save();
     }

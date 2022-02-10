@@ -3,6 +3,8 @@
 #include <data_row.h>
 #include <log_file.h>
 #include <string>
+#include <sorting_algo.h>
+#include <i_comparer.h>
 
 using namespace std;
 
@@ -16,8 +18,35 @@ void Data :: appendDataRow(DataRow *dataRow) {
     dataRows[size++] = dataRow;
 }
 
-void Data :: sort() {
-    cout << "Sorted";
+void Data :: sort(string sortType, bool ascendingOrder) {
+    class SortByID : public IComparer<DataRow*> {
+        int compareTo(DataRow* obj1, DataRow* obj2) {
+            int index = 0;
+            return obj1->getPropertyByIndex(index)->compareTo(obj2->getPropertyByIndex(index));
+        }
+    };
+    IComparer<DataRow*>* compare = new SortByID();
+    // swrap<DataRow*>(dataRows[0], dataRows[1]);
+    // bubbleSort<DataRow*>(dataRows, size, ascendingOrder, compare);
+    int swrapNum;
+    int i, j;
+
+    if (ascendingOrder) {
+        swrapNum = 1;
+    }
+    else {
+        swrapNum = -1;
+    }
+
+    for (i=0; i<size-1; i++) {
+        for (j=i+1;j<size;j++){
+            if (compare->compareTo(dataRows[i], dataRows[j]) == swrapNum){
+                DataRow* temp = dataRows[i];
+                dataRows[i] = dataRows[j];
+                dataRows[j] = temp;
+            }
+        }
+    }
 }
 
 string Data :: getSaveDataCSV() {

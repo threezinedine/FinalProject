@@ -32,4 +32,5 @@ class LengthProperty : public Property {
 
         bool isEmpty();
         int getSumStoreByte(); 
+        int compareTo(IProperty* obj);
 };

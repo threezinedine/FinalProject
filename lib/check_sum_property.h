@@ -31,4 +31,5 @@ class CheckSumProperty : public Property {
 
         bool isEmpty();
         int getSumStoreByte();
+        int compareTo(IProperty*);
 };
