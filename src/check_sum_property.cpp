@@ -38,15 +38,12 @@ void CheckSumProperty :: setValue(string newValue) {
         return;
     }
     empty = false;
-    value = newValue;
     setValueInt(stringToInt(newValue));
-    updateHexValue();
 }
 
 void CheckSumProperty :: setHexValue(string newHexValue) {
     empty = false;
-    hexValue = newHexValue;
-    updateValue();
+    setValueInt(hexStringToInt(newHexValue));
 }
 
 CheckSumProperty :: CheckSumProperty (LogFile *logFile) {
@@ -64,12 +61,7 @@ void CheckSumProperty :: updateValue() {
 }
 
 void CheckSumProperty :: updateHexValue() {
-    // get hex string of char array.
-    char hex[numByte];
-    sprintf(hex, "%X", valueInt);
-
-    string hexStr = string(hex);
-    hexValue = getStringWithZero(hexStr, 2);
+    hexValue = intToHexString(valueInt);
 }
 
 bool CheckSumProperty :: isEmpty() {

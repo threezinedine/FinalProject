@@ -40,15 +40,12 @@ void LengthProperty :: setValue(string newValue) {
         return;
     }
     empty = false;
-    value = newValue;
     setValueInt(stringToInt(newValue));
-    updateHexValue();
 }
 
 void LengthProperty :: setHexValue(string newHexValue) {
     empty = false;
-    hexValue = newHexValue;
-    updateValue();
+    setValueInt(hexStringToInt(newHexValue));
 }
 
 LengthProperty :: LengthProperty (LogFile *logFile) {
@@ -66,12 +63,7 @@ void LengthProperty :: updateValue() {
 }
 
 void LengthProperty :: updateHexValue() {
-    // get hex string of char array.
-    char hex[numByte];
-    sprintf(hex, "%X", valueInt);
-
-    string hexStr = string(hex);
-    hexValue = getStringWithZero(hexStr, 2);
+    hexValue = intToHexString(valueInt);
 }
 
 bool LengthProperty :: isEmpty() {

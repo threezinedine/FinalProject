@@ -1,4 +1,4 @@
-Sensor ID,Humidity
-04,78
-03,79
-05,56
+Sensor ID,Humidity,Temperature
+03,79,23.120001
+04,78,19.170000
+05,56,11.200000

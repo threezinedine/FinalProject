@@ -99,7 +99,7 @@ string DataRow :: getSaveDataTXT() {
         result += " ";
     }
     result += checkSum->getHexValue() + " ";
-    result += "FF";
+    result += "ff";
     return result;
 }
 

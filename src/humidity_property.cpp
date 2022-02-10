@@ -53,14 +53,7 @@ void HumidityProperty :: setValue(string newValue) {
 
 void HumidityProperty :: setHexValue(string newHexValue) {
     empty = false;
-    hexValue = newHexValue;
-
-    //convert string newHexValue to int
-    unsigned int temp; 
-    stringstream conv;
-    conv << hex << newHexValue;
-    conv >> temp;
-    setValueInt((int)temp);
+    setValueInt(hexStringToInt(newHexValue));
 }
 
 HumidityProperty :: HumidityProperty (LogFile *logFile) {
@@ -78,12 +71,7 @@ void HumidityProperty :: updateValue() {
 }
 
 void HumidityProperty :: updateHexValue() {
-    // get hex string of char array.
-    char hex[numByte];
-    sprintf(hex, "%X", valueInt);
-
-    string hexStr = string(hex);
-    hexValue = getStringWithZero(hexStr, 2);
+    hexValue = intToHexString(valueInt);
 }
 
 bool HumidityProperty :: isEmpty() {

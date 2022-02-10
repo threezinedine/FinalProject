@@ -56,3 +56,56 @@ string joinString(vector<string> strings, char joinChar) {
     }
     return result;
 }
+
+float stringToFloat(string str) {
+    return stof(str);
+}
+
+string intToHexString(int num) {
+    char hex[2];
+    sprintf(hex, "%x", num);
+
+    string hexStr = string(hex);
+    hexStr = getStringWithZero(hexStr, 2);
+    return hexStr; 
+}
+
+int hexStringToInt(string hexValue) {
+    unsigned int temp; 
+    stringstream conv;
+    conv << hex << hexValue;
+    conv >> temp;
+    return (int) temp;
+}
+
+string floatToHexString(float valueFloat) {
+    union {
+        unsigned long longValue;
+        float floatValue;
+    } value;
+
+    value.floatValue = valueFloat;
+
+    char hex[8];
+    sprintf(hex, "%lx", value.longValue);
+
+    return getStringWithZero((string)hex, 8);
+}
+
+float hexStringToFloat(vector<string> hexVectorString) {
+    string fullString = "";
+    union {
+        long longValue;
+        float floatValue;
+    } value;
+
+    for (string s:hexVectorString) {
+        fullString += s;
+    }
+
+    unsigned long longValue;
+    istringstream converter {fullString};
+    converter >> hex >> longValue;
+    value.longValue = (long)longValue;
+    return value.floatValue;
+}

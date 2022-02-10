@@ -6,6 +6,7 @@
 #include <vector>
 #include "sensor_id_property.h"
 #include "humidity_property.h"
+#include "temperature_property.h"
 
 using namespace std;
 
@@ -14,7 +15,8 @@ class DataRow{
     private:
         LogFile* logFile;
         vector<IProperty*> properties = {new SensorIDProperty(logFile), 
-                                            new HumidityProperty(logFile)};
+                                            new HumidityProperty(logFile),
+                                                new TemperatureProperty(logFile)};
         int numProperties = properties.size();
         IProperty* length;
         IProperty* checkSum;

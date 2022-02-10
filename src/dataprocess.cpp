@@ -14,6 +14,7 @@
 #include <binary_packet_file.h>
 #include <command_line_handlder.h>
 #include <container.h>
+#include <temperature_property.h>
 
 using namespace std;
 
@@ -61,4 +62,9 @@ int main(int args, char* argv[]) {
     Container container = Container(args, argv);
     container.transfer();
     container.getLogFile()->save();
+    
+    // IProperty* temperature = new TemperatureProperty(logFile);
+    // temperature->setHexValue("41 99 5c 29");
+    // cout << temperature->getHexValue();
+    // cout << endl << "Value: " << temperature->getValue();
 }
