@@ -4,6 +4,9 @@
 #include <string>
 
 
+/**
+ * Class stores checkSum byte.
+ */
 class CheckSumProperty : public OneByteIntProperty {
     protected:
         string propertyName = "Check Sum";

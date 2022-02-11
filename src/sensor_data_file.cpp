@@ -21,6 +21,9 @@ Data* SensorDataFile :: readData() {
 
     //delete header line
     data.erase(data.begin());
+    /*
+        For each read data line, if data line is valid data -> append to Data
+    */
     for (string s: data) {
         if (s != ""){
             DataRow *dataRow = new DataRow(s, logFile);

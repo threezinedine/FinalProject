@@ -10,6 +10,7 @@
  * Class to save Data to file name, or read Data from file name in TXT format.
  * 
  * @param name: file name of to save data
+ * @param logFile: the LogFile object store error messages.
  */
 class BinaryPacketFile : public DataFile{
     public:

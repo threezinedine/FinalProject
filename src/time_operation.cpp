@@ -54,6 +54,7 @@ tm* unixToTm(long int seconds) {
     vector<string> timeData = divideString(time, ' ');
     timeData.erase(timeData.begin());
 
+    // convert short form of month -> month in int
     int month;
     string monthString = timeData.front();
     if (monthString == "Jan") {

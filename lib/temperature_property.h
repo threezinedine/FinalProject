@@ -4,6 +4,10 @@
 #include "four_byte_property.h"
 
 
+/**
+ * Class stores temperature property.
+ *  Class inherits FourByteProperty
+ */
 class TemperatureProperty : public FourByteProperty {
     private:
         float valueFloat;

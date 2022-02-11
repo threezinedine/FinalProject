@@ -4,7 +4,6 @@
 #include <data_file.h>
 #include <log_file.h>
 #include <file_operations.h>
-#include <sys/stat.h>
 
 
 string DataFile :: getFileName() {
@@ -15,7 +14,7 @@ bool DataFile :: warningFileExit() {
     cout << "The " + getFileName() + " exists. Do you wanna override: (y/n)";
 
     string userInput = "n";
-    // cin >> userInput;
+    cin >> userInput;
 
     if (userInput == "y") {
         return true;
@@ -30,7 +29,7 @@ LogFile* DataFile :: getLogFile() {
 }
 
 bool DataFile :: canReadData() {
-    try {
+    if (isFileExist()){
         vector<string> data = readFile(getFileName());
         if (data.size() != 0) {
             return true;
@@ -39,13 +38,22 @@ bool DataFile :: canReadData() {
             return false;
         }
     }
-    catch (int non){
+    else{
         return false;
     }
+    
 }
 
 bool DataFile :: isFileExist() {
-    return false;
+    fstream file;
+    file.open(getFileName());
+    if(file.fail()){
+        return false;
+    }
+    else{
+        return true;
+    }
+    file.close();
 }
 
 void DataFile :: save() {

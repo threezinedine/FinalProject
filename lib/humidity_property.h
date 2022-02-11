@@ -4,6 +4,9 @@
 #include "one_byte_int_property.h"
 
 
+/**
+ * Class stores Humidity Property
+ */
 class HumidityProperty : public OneByteIntProperty {
     protected:
         string propertyName = "Humidity";

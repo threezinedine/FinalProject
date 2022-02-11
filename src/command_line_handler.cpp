@@ -7,7 +7,11 @@
 
 
 CommandLineHandler :: CommandLineHandler(int args, char* argv[]) {
-    if (args < 3 || args == 4 || args > 6) {
+    /*
+        Tracking isValid by the number of args.
+    */
+    if (args < 3 || args == 4 || args > 6) {    // The invalid number of args
+        cout << "test";
         valid = false;
         return;
     }
@@ -22,6 +26,9 @@ CommandLineHandler :: CommandLineHandler(int args, char* argv[]) {
         }
         string orderStr = string(argv[4]);
         
+        /*
+            Convert orderStr to SortType
+        */
         if (orderStr == "-hu") {
             sortType = "Humidity";
         }
@@ -78,6 +85,10 @@ IMessage* CommandLineHandler :: getMsg() {
 }
 
 bool CommandLineHandler :: isInputTXT() {
+    /*
+        Tracking if the extension is .txt -> return true
+            else return false
+    */
     vector<string> inputFileNameParts = divideString(getInputFileName(), '.');
     if (inputFileNameParts.back() == "txt") {
         return true;

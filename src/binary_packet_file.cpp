@@ -16,6 +16,13 @@ string BinaryPacketFile :: getSaveString(Data* data) {
 }
 
 Data* BinaryPacketFile :: readData() {
+    /*
+        Step 1: Read Data from fileName
+        Step 2: Divide read data by '\n'
+        Step 3: Check if data line is valid data row -> append to the data object.
+        Step 4: Return data object
+    */
+
     Data *returnData = new Data(logFile);
     vector<string> data = readFile(getFileName());
     int row = 0;
@@ -26,7 +33,7 @@ Data* BinaryPacketFile :: readData() {
             if (dataRow->isValidDataRow()) {
                 returnData->appendDataRow(dataRow);
             }
-            Data::NumRow ++;
+            Data::NumRow ++;    // add one to the number of read row (not need be valid data row)
         }
     }
     return returnData;

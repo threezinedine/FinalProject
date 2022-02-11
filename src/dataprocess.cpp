@@ -26,10 +26,13 @@ using namespace std;
 
 
 int main(int args, char* argv[]) {
+    cout << "OK";
     Container container = Container(args, argv);
+    cout << !container.isError();
     if (!container.isError()) {
         container.transfer();
     }
-
     container.getLogFile()->save();
+    // IDataFile* file = new SensorDataFile("test.csv", new LogFile("sdf.txt", "dsaf.txt"));
+    // cout << file->warningFileExit();
 }

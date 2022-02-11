@@ -72,6 +72,10 @@ void Data :: sort(string sortType, bool ascendingOrder) {
 }
 
 string Data :: getSaveDataCSV() {
+    /*
+        Step 1: Get header line
+        Step 2: Get .csv format data for each dataRow
+    */
     string result = "";
     int i = 0;
     for (i=0; i<size; i++) {
@@ -87,6 +91,9 @@ string Data :: getSaveDataCSV() {
 }
 
 string Data :: getSaveDataTXT() {
+    /*
+        Get .txt format for each dataRow
+    */
     string result = "";
     int i = 0;
     for (i=0; i<size; i++) {
@@ -98,4 +105,4 @@ string Data :: getSaveDataTXT() {
     return result;
 }
 
-int Data::NumRow = 1;
+int Data::NumRow = 1;   // intial Data row is 1 (exclude header line)

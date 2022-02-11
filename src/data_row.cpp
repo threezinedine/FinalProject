@@ -22,6 +22,11 @@ bool DataRow :: isCSVData(string inputStr){
 }
 
 void DataRow :: setPropertiesWithCSV(string inputString) {
+    /*
+        With Format id,time,temp,humi:
+        Step 1: Divide string by comma.
+        Step 2: For each IProperty -> set value 
+    */
     vector<string> data = divideString(inputString, ',');
     
     for (IProperty* property : properties) {
@@ -55,6 +60,7 @@ void DataRow :: setPropertiesWithTXT(string inputString) {
     int index = 0;
     for (IProperty *property : properties) {
         int i = 0;
+        // pass data by if mode and index missing
         if (mode==0 || (mode==1 && index!=2) || (mode==2 && index!=3)){
             vector<string> temp;
             for (i=0; i<property->getNumByte(); i++) {
@@ -75,6 +81,7 @@ void DataRow :: setPropertiesWithTXT(string inputString) {
 DataRow :: DataRow(string inputStr, LogFile* logFile) {
     this->logFile = logFile;
 
+    // assign IProperty for properties attribute
     this->properties.push_back(new SensorIDProperty(this->logFile));
     this->properties.push_back(new TimeProperty(this->logFile));
     this->properties.push_back(new TemperatureProperty(this->logFile));
@@ -100,36 +107,36 @@ DataRow :: DataRow(string inputStr, LogFile* logFile) {
 // }
 
 bool DataRow :: isValidDataRow() {
-    if (getPropertyByIndex(0)->isEmpty()){
+    if (getPropertyByIndex(0)->isEmpty()){ // sensor Id is empty
         return false;
     }
-    if (getPropertyByIndex(1)->isEmpty()){
+    if (getPropertyByIndex(1)->isEmpty()){ // time is empty
         return false;
     }
-    if (getPropertyByIndex(2)->isEmpty()){
-        if (getPropertyByIndex(3)->isEmpty()) {
+    if (getPropertyByIndex(2)->isEmpty()){  // temperature is empty
+        if (getPropertyByIndex(3)->isEmpty()) {   // both temperature and humidity are empty
             logFile->addMessage(new ErrorMessage("20", 
                     "Loss both Temperature and Humidity in row " + to_string(Data::NumRow)));
             return false;
         }
-        else {
+        else {  // only temperature is empty
             logFile->addMessage(new WarningMessage("21", 
                     "Loss Temperature in row " + to_string(Data::NumRow)));
             return true;
         }
     }
-    else if(getPropertyByIndex(3)->isEmpty()){
+    else if(getPropertyByIndex(3)->isEmpty()){  // only humidity is empty
         logFile->addMessage(new WarningMessage("21", 
                     "Loss Humidity in row " + to_string(Data::NumRow)));
-        return true;
-    }
-    if (getPropertyByIndex(3)->isEmpty()) {
         return true;
     }
     return true;
 }
 
 string DataRow :: getHeaderLine() {
+    /*
+        get property name of each property in properties attribute.
+    */
     string result = "";
     
     int index = 0;
@@ -158,8 +165,11 @@ string DataRow :: getSaveDataCSV() {
 }
 
 string DataRow :: getSaveDataTXT() {
-    string result = "00 ";
-    result += length->getHexValue() + " ";
+    /*
+        result format: 00 + length + property's hexValue + checkSum + ff
+    */
+    string result = "00 ";    // intialize with start byte
+    result += length->getHexValue() + " ";  // add length byte
 
     for (IProperty* property: properties) {
         if (!property->isEmpty()) {
@@ -167,12 +177,16 @@ string DataRow :: getSaveDataTXT() {
             result += " ";
         }
     }
-    result += checkSum->getHexValue() + " ";
-    result += "ff";
+    result += checkSum->getHexValue() + " ";    // add checkSum byte
+    result += "ff"; // add end point
     return result;
 }
 
 IProperty* DataRow :: getLength() {
+    /*
+        Initial length is 4 (start byte, length byte, checksum byte, end byte)
+        Iterate through properties and add numByte of each property.
+    */
     int valLength = 4;
 
     string result = "";
@@ -186,6 +200,10 @@ IProperty* DataRow :: getLength() {
 }
 
 IProperty* DataRow :: getCheckSum() {
+    /*
+        Intial checkSum is sum of stored bytes of length property
+            Iterate through properties and add stored bytes of each property
+    */
     int sum = length->getSumStoreByte();
     for (IProperty* property: properties) {
         if (!property->isEmpty()) {

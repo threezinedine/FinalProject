@@ -3,6 +3,9 @@
 #include "property.h"
 
 
+/**
+ * Abstract class for 1-byte property (int)
+ */
 class OneByteIntProperty : public Property {
     protected:
         int numByte = 1;

@@ -18,6 +18,8 @@ LogFile :: LogFile (string inputFileName, string outputFileName){
 string LogFile :: getFileName() {
     string date = logTime->getDateString("");
     string time = logTime->getDayTimeString("");
+    
+    // log file format
     return "logs/" + getFileNameNoEx(inputFileName) + "_" 
                 + getFileNameNoEx(outputFileName) + "_" + 
                     date + "_" + time +".log";
@@ -29,10 +31,13 @@ void LogFile :: addMessage(IMessage* msg) {
 
 string LogFile :: getCompleteMessage() {
     string saveString = "";
+    if (messages.size() == 1){
+        return messages.back()->getMessage();
+    }
 
-    for (IMessage *msg: messages){
-        saveString += msg->getMessage();
-        saveString += '\n';
+    while (messages.size() > 0) {
+        saveString += messages.front()->getMessage();
+        messages.erase(messages.begin());
     }
     return saveString;
 }

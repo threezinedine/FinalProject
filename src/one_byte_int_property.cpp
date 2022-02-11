@@ -40,6 +40,7 @@ int OneByteIntProperty :: getSumStoreByte() {
 }
 
 int OneByteIntProperty :: compareTo(IProperty* obj) {
+    // compare if object value is empty
     if (empty) {
         if (obj->isEmpty()){
             return 0;

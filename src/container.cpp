@@ -12,14 +12,21 @@
 
 Container :: Container(int args, char* argv[]) {
     commandLineHandler = new CommandLineHandler(args, argv);
+    
+    // Return and get error if command line is not valid
+    if (!commandLineHandler->isValidCommand()){
+        error = true;
+        logFile = new LogFile("", "");
+        logFile->addMessage(commandLineHandler->getMsg());
+        return;
+    }
+
     logFile = new LogFile(commandLineHandler->getInputFileName(),
                                         commandLineHandler->getOputputFileName());
     
-    if (!commandLineHandler->isValidCommand()){
-        error = true;
-        logFile->addMessage(commandLineHandler->getMsg());
-    }
-    
+    /*
+        If input is .txt -> cannot use sorting mode.
+    */
     if (!commandLineHandler->isInputTXT()) {
         input = new SensorDataFile(commandLineHandler->getInputFileName(),
                                         logFile);
@@ -47,14 +54,14 @@ LogFile* Container :: getLogFile() {
 }
 
 void Container :: transfer() {
-    if (!commandLineHandler->isValidCommand()) {
-        logFile->addMessage(commandLineHandler->getMsg());
-        error = true;
-        return;
-    }
+    /*
+        Step 1: Read Data by IDataFile input and assign to Data object
+        Step 2: run Sorting mode if user want to
+        Step 3: Save Data by IDataFile ouput
+    */
     if (input->canReadData()) {
-        data = input->readData();
 
+        // asking if output file is exist
         if (output->isFileExist()) {
             if (!output->warningFileExit()) {
                 error = true;
@@ -63,15 +70,19 @@ void Container :: transfer() {
                 return;
             }
         }
+        data = input->readData();
 
+        // run sorting mode if user want to
         if (commandLineHandler->onSortingMode()){
             data->sort(commandLineHandler->getSortType(), commandLineHandler->getSortOrder());
         }
-        output->getSaveString(data);
 
+        // output receive Data object and save to output file
+        output->getSaveString(data);
         output->save();
     }
     else {
+        // if cannot read input file.
         IMessage *msg = new ErrorMessage("08", "Cannot read input file.");
         logFile->addMessage(msg);
         error = true;

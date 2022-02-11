@@ -5,6 +5,9 @@
 #include "log_file.h"
 
 
+/**
+ * Abstract class implement IProperty interface
+ */
 class Property : public IProperty{
     protected:
         bool empty = true;

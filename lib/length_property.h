@@ -5,6 +5,9 @@
 #include <log_file.h>
 
 
+/**
+ * Class stores length byte.
+ */
 class LengthProperty : public OneByteIntProperty {
     protected:
         string propertyName = "Length";

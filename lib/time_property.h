@@ -4,6 +4,10 @@
 #include "my_time.h"
 
 
+/**
+ * Class stores value for time property.
+ *      Class inherits FourByteProperty.
+ */
 class TimeProperty : public FourByteProperty {
     private:
         MyTime* time;
