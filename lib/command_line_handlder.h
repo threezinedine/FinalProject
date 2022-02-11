@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "i_message.h"
+#include "error_message.h"
 
 
 class CommandLineHandler {
@@ -9,8 +10,8 @@ class CommandLineHandler {
         string inputFile;
         string outputFile;
         string sortType;
-        bool sortingOrder;
-        IMessage* msg;
+        bool sortingOrder = true;
+        IMessage* msg = new ErrorMessage("05", "Invalid Command");
         bool valid = true;
 
     public:

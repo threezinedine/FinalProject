@@ -147,3 +147,7 @@ IProperty* DataRow :: getPropertyByIndex(int index) {
         i ++;
     }
 }
+
+int DataRow :: getNumProperties() {
+    return numProperties;
+}

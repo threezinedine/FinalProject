@@ -40,9 +40,12 @@ LogFile* Container :: getLogFile() {
 }
 
 void Container :: transfer() {
+    if (!commandLineHandler->isValidCommand()) {
+        logFile->addMessage(commandLineHandler->getMsg());
+        return;
+    }
     if (input->canReadData()) {
         data = input->readData();
-
         if (output->isFileExist()) {
             if (!output->warningFileExit()) {
                 IMessage *msg = new ErrorMessage("07", "Output file exists.");
@@ -51,8 +54,10 @@ void Container :: transfer() {
             }
         }
 
-        data->sort("", true);
+        data->sort(commandLineHandler->getSortType(), commandLineHandler->getSortOrder());
+
         output->getSaveString(data);
+
         output->save();
     }
     else {

@@ -59,7 +59,14 @@ int main(int args, char* argv[]) {
     // data->appendDataRow(dataRow2);
     // cout << data->getSaveDataTXT() << endl;
     // cout << data->getSaveDataCSV();
-    // CommandLineHandler *commandLineHandler = new CommandLineHandler(args, argv, logFile);
+    // CommandLineHandler *commandLineHandler = new CommandLineHandler(args, argv);
+    // if (!commandLineHandler->isValidCommand()) {
+    //     cout << endl << commandLineHandler->getMsg()->getMessage();
+    // }
+    // cout << endl << commandLineHandler->getInputFileName();
+    // cout << endl << commandLineHandler->getOputputFileName();
+    // cout << endl << "sort order " << commandLineHandler->getSortOrder();
+    // cout << endl << "sort type " <<commandLineHandler->getSortType();
     // IDataFile *input = new SensorDataFile(commandLineHandler->getInputFileName(), logFile);
     // Data* data = input->readData();
     // IDataFile *output = new BinaryPacketFile(commandLineHandler->getOputputFileName(), logFile);

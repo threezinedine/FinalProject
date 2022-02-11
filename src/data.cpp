@@ -5,13 +5,14 @@
 #include <string>
 #include <sorting_algo.h>
 #include <i_comparer.h>
-
+#include <warning_message.h>
+#define MAX_ROWS 30
 using namespace std;
 
 
 Data :: Data (LogFile *logFile) {
     this->logFile = logFile;
-    dataRows = new DataRow*[10];
+    dataRows = new DataRow*[MAX_ROWS];
 }
 
 void Data :: appendDataRow(DataRow *dataRow) {
@@ -19,17 +20,36 @@ void Data :: appendDataRow(DataRow *dataRow) {
 }
 
 void Data :: sort(string sortType, bool ascendingOrder) {
-    class SortByID : public IComparer<DataRow*> {
-        int compareTo(DataRow* obj1, DataRow* obj2) {
-            int index = 0;
-            return obj1->getPropertyByIndex(index)->compareTo(obj2->getPropertyByIndex(index));
+    if (size <= 0) {
+        logFile->addMessage(new WarningMessage("11", "No data"));
+        return;
+    }
+
+    DataRow *obj = dataRows[0];
+    int i, j, index;
+    for (i=0; i<obj->getNumProperties(); i++) {
+        if (sortType == obj->getPropertyByIndex(i)->getPropertyName()){
+            index = i;
+            break;
         }
+    }
+
+
+    class SortByID : public IComparer<DataRow*> {
+        private: 
+            int index;
+        public:
+            SortByID(int index) {
+                this->index = index;
+            }
+            int compareTo(DataRow* obj1, DataRow* obj2) {
+                return obj1->getPropertyByIndex(index)->compareTo(obj2->getPropertyByIndex(index));
+            }
     };
-    IComparer<DataRow*>* compare = new SortByID();
+    IComparer<DataRow*>* compare = new SortByID(index);
     // swrap<DataRow*>(dataRows[0], dataRows[1]);
     // bubbleSort<DataRow*>(dataRows, size, ascendingOrder, compare);
     int swrapNum;
-    int i, j;
 
     if (ascendingOrder) {
         swrapNum = 1;

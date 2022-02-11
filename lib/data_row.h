@@ -33,5 +33,7 @@ class DataRow{
         string getSaveDataTXT();
         IProperty* getLength();
         IProperty* getCheckSum();
+
+        int getNumProperties();
         IProperty* getPropertyByIndex(int);
 };

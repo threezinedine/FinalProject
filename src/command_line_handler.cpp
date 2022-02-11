@@ -7,17 +7,49 @@
 
 
 CommandLineHandler :: CommandLineHandler(int args, char* argv[]) {
-    if (args < 3) {
+    if (args < 3 || args == 4 || args > 6) {
         valid = false;
-        msg = new ErrorMessage("05", "Invalid Command");
+        return;
     }
-    else if (args == 3){
+    if (args >= 3){
         inputFile = string(argv[1]);
         outputFile = string(argv[2]);
     }
-    else{
-        valid = false;
-        msg = new ErrorMessage("05", "Invalid Command");
+    if (args >= 5) {
+        if (string(argv[3]) != "-s") {
+            valid = false;
+            return;
+        }
+        string orderStr = string(argv[4]);
+        
+        if (orderStr == "-hu") {
+            sortType = "Humidity";
+        }
+        else if(orderStr == "-id"){
+            sortType = "Sensor ID";
+        }
+        else if(orderStr == "-ti"){
+            sortType = "Time";
+        }
+        else if(orderStr == "-te"){
+            sortType = "Temperature";
+        }
+        else {
+            valid = false;
+            return;
+        }
+    }
+    if (args == 6) {
+        if (string(argv[5]) == "-asc"){
+            sortingOrder = true;
+        }
+        else if (string(argv[5]) == "-des") {
+            sortingOrder = false;
+        }
+        else{
+            valid = false;
+            return;
+        }
     }
 }
 
