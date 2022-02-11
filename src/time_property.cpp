@@ -4,6 +4,8 @@
 #include <log_file.h>
 #include <time_property.h>
 #include <string_operators.h>
+#include <error_message.h>
+#include <data.h>
 
 
 void TimeProperty :: setValueLong(long valueLong) {
@@ -64,6 +66,12 @@ LogFile* TimeProperty :: getLogFile() {
 }
 
 void TimeProperty :: setValue(string newValue) {
+    if (newValue == "") {
+        empty = true;
+        logFile->addMessage(new ErrorMessage("16",
+                            "Loss Time in row " + to_string(Data::NumRow)));
+        return;
+    }
     MyTime* temp = new MyTime(newValue);
     setValueLong(temp->getUnixLongNumber());
 }
@@ -88,6 +96,15 @@ int TimeProperty :: getSumStoreByte() {
 }
 
 int TimeProperty :: compareTo(IProperty* obj){
+    if (empty) {
+        if (obj->isEmpty()){
+            return 0;
+        }
+        else{
+            return -1;
+        }
+    }
+
     MyTime* temp = new MyTime(obj->getValue());
     long data = temp->getUnixLongNumber();
     if (valueLong > data) {

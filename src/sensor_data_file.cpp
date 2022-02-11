@@ -21,11 +21,13 @@ Data* SensorDataFile :: readData() {
 
     //delete header line
     data.erase(data.begin());
-
     for (string s: data) {
-        DataRow *dataRow = new DataRow(s, logFile);
-        if (dataRow->isValidDataRow(s)) {
-            returnData->appendDataRow(dataRow);
+        if (s != ""){
+            DataRow *dataRow = new DataRow(s, logFile);
+            if (dataRow->isValidDataRow()) {
+                returnData->appendDataRow(dataRow);
+            }
+            Data::NumRow ++;
         }
     }
     return returnData;

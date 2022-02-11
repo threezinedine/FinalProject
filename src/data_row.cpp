@@ -7,6 +7,9 @@
 #include <length_property.h>
 #include <check_sum_property.h>
 #include <time_property.h>
+#include <error_message.h>
+#include <data.h>
+#include <warning_message.h>
 
 
 bool DataRow :: isCSVData(string inputStr){
@@ -30,19 +33,41 @@ void DataRow :: setPropertiesWithCSV(string inputString) {
 void DataRow :: setPropertiesWithTXT(string inputString) {
     vector<string> data = divideString(inputString, ' ');
 
+    int mode;
+    //check the number of received bits
+    if (data.size() == 4 + 1 + 4 + 4 + 1){
+        mode = 0;   // enough data
+    }
+    else if (data.size() == 4 + 1 + 4 + 1){
+        mode = 1; // leak temp
+    }
+    else if (data.size() == 4 + 1 + 4 + 4){
+        mode = 2; // leak humi
+    }
+    else{
+        mode = 3; //invalid
+    }
+
     // erase 2 first data (startByte and lengthByte)
     data.erase(data.begin());
     data.erase(data.begin());
-
+    
+    int index = 0;
     for (IProperty *property : properties) {
         int i = 0;
-        vector<string> temp;
-        for (i=0; i<property->getNumByte(); i++) {
-            temp.push_back(data.front());
-            data.erase(data.begin());
+        if (mode==0 || (mode==1 && index!=2) || (mode==2 && index!=3)){
+            vector<string> temp;
+            for (i=0; i<property->getNumByte(); i++) {
+                temp.push_back(data.front());
+                data.erase(data.begin());
+            }
+            string dataPart = joinString(temp, ' ');
+            property->setHexValue(dataPart);
         }
-        string dataPart = joinString(temp, ' ');
-        property->setHexValue(dataPart);
+        else{
+            property->setHexValue("");
+        }
+        index ++;
     }
     return;
 }
@@ -67,7 +92,41 @@ DataRow :: DataRow(string inputStr, LogFile* logFile) {
     checkSum = getCheckSum();
 }
 
-bool DataRow :: isValidDataRow(string inputStr) {
+// bool DataRow :: isValidDataRowCSV() {
+    
+// }
+
+// bool DataRow :: isValidDataRowTXT() {
+//     return true;
+// }
+
+bool DataRow :: isValidDataRow() {
+    if (getPropertyByIndex(0)->isEmpty()){
+        return false;
+    }
+    if (getPropertyByIndex(1)->isEmpty()){
+        return false;
+    }
+    if (getPropertyByIndex(2)->isEmpty()){
+        if (getPropertyByIndex(3)->isEmpty()) {
+            logFile->addMessage(new ErrorMessage("20", 
+                    "Loss both Temperature and Humidity in row " + to_string(Data::NumRow)));
+            return false;
+        }
+        else {
+            logFile->addMessage(new WarningMessage("21", 
+                    "Loss Temperature in row " + to_string(Data::NumRow)));
+            return true;
+        }
+    }
+    else if(getPropertyByIndex(3)->isEmpty()){
+        logFile->addMessage(new WarningMessage("21", 
+                    "Loss Humidity in row " + to_string(Data::NumRow)));
+        return true;
+    }
+    if (getPropertyByIndex(3)->isEmpty()) {
+        return true;
+    }
     return true;
 }
 
@@ -104,8 +163,10 @@ string DataRow :: getSaveDataTXT() {
     result += length->getHexValue() + " ";
 
     for (IProperty* property: properties) {
-        result += property->getHexValue();
-        result += " ";
+        if (!property->isEmpty()) {
+            result += property->getHexValue();
+            result += " ";
+        }
     }
     result += checkSum->getHexValue() + " ";
     result += "ff";

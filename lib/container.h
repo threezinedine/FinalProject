@@ -15,9 +15,11 @@ class Container {
         IDataFile* output;
         Data* data;
         LogFile* logFile;
+        bool error = false;
 
     public:
         Container(int args, char* argv[]);
+        bool isError();
         LogFile* getLogFile();
         void transfer();
 };

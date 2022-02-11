@@ -5,6 +5,7 @@
 #include <error_message.h>
 #include <sstream>
 #include <log_file.h>
+#include <data.h>
 
 
 int HumidityProperty :: getNumByte() {
@@ -30,12 +31,14 @@ LogFile* HumidityProperty :: getLogFile() {
 void HumidityProperty :: setValueInt(int newValueInt) {
     // if humidity not in range (40, 95) -> raise Error
     if (newValueInt < 40 || newValueInt > 95) {
-        IMessage *msg = new ErrorMessage("04", "Humidity Property must be in range (40, 95).");
+        empty = true;
+        IMessage *msg = new ErrorMessage("04", 
+                    "Humidity Property is not in range (40, 95) in row " 
+                        + to_string(Data::NumRow));
         logFile->addMessage(msg);
+        return;
     }
-    else {
-        valueInt = newValueInt;
-    }
+    valueInt = newValueInt;
     empty = false;
     updateValue();
     updateHexValue();
@@ -46,13 +49,14 @@ void HumidityProperty :: setValue(string newValue) {
         empty = true;
         return;
     }
-    empty = false;
-    value = newValue;
     setValueInt(stringToInt(newValue));
 }
 
 void HumidityProperty :: setHexValue(string newHexValue) {
-    empty = false;
+    if (newHexValue == ""){
+        empty = true;
+        return;
+    }
     setValueInt(hexStringToInt(newHexValue));
 }
 
@@ -83,6 +87,15 @@ int HumidityProperty :: getSumStoreByte() {
 }
 
 int HumidityProperty :: compareTo(IProperty* obj) {
+    if (empty) {
+        if (obj->isEmpty()){
+            return 0;
+        }
+        else{
+            return -1;
+        }
+    }
+    
     int value = stringToInt(obj->getValue());
     if (this->valueInt > value) {
         return 1;

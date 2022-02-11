@@ -12,6 +12,7 @@ class Data{
         int size = 0;
 
     public:
+        static int NumRow; 
         Data(LogFile* logFile);
         void appendDataRow(DataRow* dataRow);
         void sort(string sortType, bool ascendingOrder);

@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <string_operators.h>
 
 
 vector<string> readFile(string fileName) {
@@ -37,4 +38,10 @@ void writeFile(string fileName, string writtenData) {
     file << writtenData;
     file.close();
     return;
+}
+
+string getFileNameNoEx(string fileName){
+    vector<string> vectStr = divideString(fileName, '.');
+    vectStr.erase(vectStr.end()-1);
+    return vectStr.back();
 }

@@ -14,7 +14,7 @@ class LogFile: public IFile {
         string inputFileName;
         string outputFileName;
         string fileName;
-        MyTime logTime;
+        MyTime* logTime;
         vector<IMessage*> messages; 
 
         string getCompleteMessage();

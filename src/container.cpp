@@ -23,8 +23,10 @@ Container :: Container(int args, char* argv[]) {
     }
     else {
         if (commandLineHandler->onSortingMode()) {
-            IMessage *msg = new ErrorMessage("06", "Cannot sorting with binary packet input.");
+            IMessage *msg = new ErrorMessage("06", "Cannot sort with binary packet file input.");
             logFile->addMessage(msg);
+            error = true;
+            return;
         }
         else{
             input = new BinaryPacketFile(commandLineHandler->getInputFileName(),
@@ -42,20 +44,22 @@ LogFile* Container :: getLogFile() {
 void Container :: transfer() {
     if (!commandLineHandler->isValidCommand()) {
         logFile->addMessage(commandLineHandler->getMsg());
+        error = true;
         return;
     }
     if (input->canReadData()) {
         data = input->readData();
         if (output->isFileExist()) {
             if (!output->warningFileExit()) {
+                error = true;
                 IMessage *msg = new ErrorMessage("07", "Output file exists.");
                 logFile->addMessage(msg);
                 return;
             }
         }
-
-        data->sort(commandLineHandler->getSortType(), commandLineHandler->getSortOrder());
-
+        if (commandLineHandler->onSortingMode()){
+            data->sort(commandLineHandler->getSortType(), commandLineHandler->getSortOrder());
+        }
         output->getSaveString(data);
 
         output->save();
@@ -63,6 +67,11 @@ void Container :: transfer() {
     else {
         IMessage *msg = new ErrorMessage("08", "Cannot read input file.");
         logFile->addMessage(msg);
+        error = true;
         return;
     }
+}
+
+bool Container :: isError() {
+    return error;
 }

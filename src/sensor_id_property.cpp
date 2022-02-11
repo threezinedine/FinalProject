@@ -6,6 +6,7 @@
 #include <log_file.h>
 #include <string_operators.h>
 #include <sstream>
+#include <data.h>
 
 
 int SensorIDProperty :: getNumByte() {
@@ -31,8 +32,11 @@ LogFile* SensorIDProperty :: getLogFile() {
 void SensorIDProperty :: setValueInt(int newValueInt) {
     // if sensor value <= 0 -> raise Error
     if (newValueInt <= 0) {
-        IMessage *msg = new ErrorMessage("03", "Sensor ID cannot be less than zero.");
+        empty = true;
+        IMessage *msg = new ErrorMessage("03", 
+                    "Sensor ID is less than zero in row " + to_string(Data::NumRow));
         logFile->addMessage(msg);
+        return;
     }
     else {
         valueInt = newValueInt;
@@ -44,6 +48,8 @@ void SensorIDProperty :: setValueInt(int newValueInt) {
 
 void SensorIDProperty :: setValue(string newValue) {
     if (newValue == "") {
+        logFile->addMessage(new ErrorMessage("11", 
+                    "Loss Sensor ID in row " + to_string(Data::NumRow)));
         empty = true;
         return;
     }
@@ -84,6 +90,15 @@ int SensorIDProperty :: getSumStoreByte() {
 }
 
 int SensorIDProperty :: compareTo(IProperty* obj) {
+    if (empty) {
+        if (obj->isEmpty()){
+            return 0;
+        }
+        else{
+            return -1;
+        }
+    }
+    
     int value = stringToInt(obj->getValue());
     if (this->valueInt > value) {
         return 1;

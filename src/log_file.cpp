@@ -11,14 +11,16 @@
 LogFile :: LogFile (string inputFileName, string outputFileName){
     this->inputFileName = inputFileName;
     this->outputFileName = outputFileName;
-    logTime = MyTime();
+    logTime = new MyTime();
     this->getFileName();
 }
 
 string LogFile :: getFileName() {
-    string date = logTime.getDateString("");
-    string time = logTime.getDayTimeString("");
-    return inputFileName + "_" + outputFileName + "_" + date + "_" + time +".log";
+    string date = logTime->getDateString("");
+    string time = logTime->getDayTimeString("");
+    return "logs/" + getFileNameNoEx(inputFileName) + "_" 
+                + getFileNameNoEx(outputFileName) + "_" + 
+                    date + "_" + time +".log";
 }
 
 void LogFile :: addMessage(IMessage* msg) {

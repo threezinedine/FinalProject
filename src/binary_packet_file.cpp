@@ -18,11 +18,15 @@ string BinaryPacketFile :: getSaveString(Data* data) {
 Data* BinaryPacketFile :: readData() {
     Data *returnData = new Data(logFile);
     vector<string> data = readFile(getFileName());
+    int row = 0;
 
     for (string s: data) {
-        DataRow *dataRow = new DataRow(s, logFile);
-        if (dataRow->isValidDataRow(s)) {
-            returnData->appendDataRow(dataRow);
+        if (s != ""){
+            DataRow *dataRow = new DataRow(s, logFile);
+            if (dataRow->isValidDataRow()) {
+                returnData->appendDataRow(dataRow);
+            }
+            Data::NumRow ++;
         }
     }
     return returnData;

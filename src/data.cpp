@@ -6,7 +6,7 @@
 #include <sorting_algo.h>
 #include <i_comparer.h>
 #include <warning_message.h>
-#define MAX_ROWS 30
+#define MAX_ROWS 25000
 using namespace std;
 
 
@@ -24,6 +24,7 @@ void Data :: sort(string sortType, bool ascendingOrder) {
         logFile->addMessage(new WarningMessage("11", "No data"));
         return;
     }
+
 
     DataRow *obj = dataRows[0];
     int i, j, index;
@@ -50,6 +51,7 @@ void Data :: sort(string sortType, bool ascendingOrder) {
     // swrap<DataRow*>(dataRows[0], dataRows[1]);
     // bubbleSort<DataRow*>(dataRows, size, ascendingOrder, compare);
     int swrapNum;
+
 
     if (ascendingOrder) {
         swrapNum = 1;
@@ -95,3 +97,5 @@ string Data :: getSaveDataTXT() {
     }
     return result;
 }
+
+int Data::NumRow = 1;

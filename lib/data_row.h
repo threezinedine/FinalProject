@@ -25,9 +25,12 @@ class DataRow{
         void setPropertiesWithCSV(string);
         void setPropertiesWithTXT(string);
 
+        // bool isValidDataRowCSV();
+        // bool isValidDataRowTXT();
+
     public:
         DataRow(string input, LogFile* logFile);
-        bool isValidDataRow(string inputStr);
+        bool isValidDataRow();
         string getHeaderLine();
         string getSaveDataCSV();
         string getSaveDataTXT();
