@@ -6,12 +6,25 @@
 #include <string>
 
 
+/**
+ * Class to save Data to file name, or read Data from file name in TXT format.
+ * 
+ * @param name: file name of to save data
+ */
 class BinaryPacketFile : public DataFile{
-    protected:
-        string getSaveString(Data*);
-
     public:
         BinaryPacketFile(string name, LogFile* logFile);
+
+        /**
+         * convert from `Data*` to save string.
+         */
+        string getSaveString(Data*);
+
+        /**
+         * get Data from filename.
+         * 
+         * @return `Data*` that stores all info.
+         */
         Data* readData();
 };
 

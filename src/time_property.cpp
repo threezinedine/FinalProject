@@ -41,30 +41,6 @@ void TimeProperty :: updateHexValue() {
     }
 }
 
-int TimeProperty :: getNumByte() {
-    return numByte;
-}
-
-long TimeProperty :: getValueLong() {
-    return valueLong;
-}
-
-string TimeProperty :: getValue() {
-    return value;
-}
-
-string TimeProperty :: getHexValue() {
-    return hexValue;
-}
-
-string TimeProperty :: getPropertyName() {
-    return propertyName;
-}
-
-LogFile* TimeProperty :: getLogFile() {
-    return logFile;
-}
-
 void TimeProperty :: setValue(string newValue) {
     if (newValue == "") {
         empty = true;
@@ -79,20 +55,6 @@ void TimeProperty :: setValue(string newValue) {
 void TimeProperty :: setHexValue(string hexValueStr) {
     vector<string> hexVectorString = divideString(hexValueStr, ' ');
     setValueLong(hexStringToLong(hexVectorString));
-}
-
-bool TimeProperty :: isEmpty() {
-    return empty;
-}
-
-int TimeProperty :: getSumStoreByte() {
-    vector<string> hexVectorString = divideString(hexValue, ' ');
-    int result = 0;
-
-    for (string s: hexVectorString) {
-        result += hexStringToInt(s);
-    }
-    return result;
 }
 
 int TimeProperty :: compareTo(IProperty* obj){
@@ -116,4 +78,8 @@ int TimeProperty :: compareTo(IProperty* obj){
     else{
         return -1;
     }
+}
+
+string TimeProperty :: getPropertyName() {
+    return propertyName;
 }

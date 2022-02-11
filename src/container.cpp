@@ -15,6 +15,11 @@ Container :: Container(int args, char* argv[]) {
     logFile = new LogFile(commandLineHandler->getInputFileName(),
                                         commandLineHandler->getOputputFileName());
     
+    if (!commandLineHandler->isValidCommand()){
+        error = true;
+        logFile->addMessage(commandLineHandler->getMsg());
+    }
+    
     if (!commandLineHandler->isInputTXT()) {
         input = new SensorDataFile(commandLineHandler->getInputFileName(),
                                         logFile);
@@ -49,6 +54,7 @@ void Container :: transfer() {
     }
     if (input->canReadData()) {
         data = input->readData();
+
         if (output->isFileExist()) {
             if (!output->warningFileExit()) {
                 error = true;
@@ -57,6 +63,7 @@ void Container :: transfer() {
                 return;
             }
         }
+
         if (commandLineHandler->onSortingMode()){
             data->sort(commandLineHandler->getSortType(), commandLineHandler->getSortOrder());
         }

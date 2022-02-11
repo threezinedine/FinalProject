@@ -11,6 +11,7 @@ class Property : public IProperty{
         string name;
         string value;
         string hexValue;
+        string propertyName;
         LogFile* logFile;
 
         virtual void updateHexValue() = 0;
@@ -18,14 +19,15 @@ class Property : public IProperty{
 
     public:
         virtual int getNumByte() = 0;
-        virtual string getHexValue() = 0;
+        string getHexValue();
+        string getValue();
         virtual string getPropertyName() = 0;
-        virtual LogFile* getLogFile() = 0;
+        LogFile* getLogFile();
 
         virtual void setValue(string) = 0; 
         virtual void setHexValue(string) = 0;
 
-        virtual bool isEmpty() = 0;
+        bool isEmpty();
         virtual int getSumStoreByte() = 0;
         virtual int compareTo(IProperty* obj) = 0;
 };

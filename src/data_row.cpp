@@ -75,7 +75,6 @@ void DataRow :: setPropertiesWithTXT(string inputString) {
 DataRow :: DataRow(string inputStr, LogFile* logFile) {
     this->logFile = logFile;
 
-
     this->properties.push_back(new SensorIDProperty(this->logFile));
     this->properties.push_back(new TimeProperty(this->logFile));
     this->properties.push_back(new TemperatureProperty(this->logFile));
@@ -182,7 +181,6 @@ IProperty* DataRow :: getLength() {
             valLength += property->getNumByte();
         }
     }
-
     IProperty *newLength = new LengthProperty(valLength, logFile);
     return newLength;
 }

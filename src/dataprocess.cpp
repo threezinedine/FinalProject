@@ -26,8 +26,6 @@ using namespace std;
 
 
 int main(int args, char* argv[]) {
-    // LogFile *logFile = new LogFile("input.txt", "output.txt");
-
     Container container = Container(args, argv);
     if (!container.isError()) {
         container.transfer();

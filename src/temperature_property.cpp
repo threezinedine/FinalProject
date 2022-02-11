@@ -49,26 +49,6 @@ void TemperatureProperty :: updateHexValue() {
     }
 }
 
-int TemperatureProperty :: getNumByte() {
-    return numByte;
-}
-
-string TemperatureProperty :: getValue() {
-    return value;
-}
-
-string TemperatureProperty :: getHexValue() {
-    return hexValue;
-}
-
-string TemperatureProperty :: getPropertyName() {
-    return propertyName;
-}
-
-LogFile* TemperatureProperty :: getLogFile() {
-    return logFile;
-}
-
 void TemperatureProperty :: setValue(string value) {
     if (value == "") {
         empty = true;
@@ -76,10 +56,6 @@ void TemperatureProperty :: setValue(string value) {
     }
     empty = false;
     setValueFloat(stringToFloat(value));
-}
-
-bool TemperatureProperty :: isEmpty() {
-    return empty;
 }
 
 void TemperatureProperty :: setHexValue(string hexValue) {
@@ -91,16 +67,6 @@ void TemperatureProperty :: setHexValue(string hexValue) {
     setValueFloat(hexStringToFloat(hexStringVector));
 }
 
-int TemperatureProperty :: getSumStoreByte() {
-    vector<string> hexStringVector = divideString(hexValue, ' ');
-    int result = 0;
-
-    for (string s:hexStringVector) {
-        result += hexStringToInt(s);
-    }
-    return result;
-}
-
 int TemperatureProperty :: compareTo(IProperty* obj) {
     if (empty) {
         if (obj->isEmpty()){
@@ -110,7 +76,7 @@ int TemperatureProperty :: compareTo(IProperty* obj) {
             return -1;
         }
     }
-    cout << endl << stringToFloat(obj->getValue());
+    // cout << endl << stringToFloat(obj->getValue());
     float objValue = stringToFloat(obj->getValue());
     if (this->valueFloat > objValue){
         return 1;
@@ -121,4 +87,8 @@ int TemperatureProperty :: compareTo(IProperty* obj) {
     else {
         return -1;
     }
+}
+
+string TemperatureProperty :: getPropertyName() {
+    return propertyName;
 }

@@ -1,19 +1,18 @@
 #pragma once
 #include <iostream>
-#include "property.h"
+#include "four_byte_property.h"
 #include "my_time.h"
 
 
-class TimeProperty : public Property {
+class TimeProperty : public FourByteProperty {
     private:
-        int numByte = 4;
-        long valueLong;
-        string propertyName = "Time";
         MyTime* time;
-
-        void setValueLong(long valueLong);
+        long valueLong;
         
     protected:
+        string propertyName = "Time";
+
+        void setValueLong(long valueLong);
         void updateHexValue();
         void updateValue();
 
@@ -21,17 +20,10 @@ class TimeProperty : public Property {
         TimeProperty(LogFile* logFile);
         TimeProperty(long valueLong, LogFile* logFile);
 
-        int getNumByte();
-        long getValueLong();
-        string getValue();
-        string getHexValue();
         string getPropertyName();
-        LogFile* getLogFile(); 
 
         void setValue(string valueStr);
         void setHexValue(string hexValueStr);
 
-        bool isEmpty();
-        int getSumStoreByte(); 
         int compareTo(IProperty* obj);
 };

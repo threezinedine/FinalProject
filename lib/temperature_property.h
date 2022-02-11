@@ -1,18 +1,17 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <property.h>
+#include "four_byte_property.h"
 
 
-class TemperatureProperty : public Property {
+class TemperatureProperty : public FourByteProperty {
     private:
-        int numByte = 4;
         float valueFloat;
+
+    protected:
         string propertyName = "Temperature";
 
         void setValueFloat(float valueFloat);
-
-    protected:
         void updateHexValue();
         void updateValue();
 
@@ -20,16 +19,10 @@ class TemperatureProperty : public Property {
         TemperatureProperty(LogFile* logFile);
         TemperatureProperty(float valueFloat, LogFile* logFile);
 
-        int getNumByte();
-        string getValue();
-        string getHexValue();
         string getPropertyName();
-        LogFile* getLogFile(); 
 
         void setValue(string valueStr);
         void setHexValue(string hexValueStr);
 
-        bool isEmpty();
-        int getSumStoreByte(); 
         int compareTo(IProperty* obj);
 };
