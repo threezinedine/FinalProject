@@ -3,3 +3,5 @@ dataprocess.exe
 .vscode
 *.log
 logs
+*.docx
+*.drawio
