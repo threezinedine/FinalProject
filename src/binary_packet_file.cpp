@@ -25,7 +25,7 @@ Data* BinaryPacketFile :: readData() {
 
     Data *returnData = new Data(logFile);
     vector<string> data = readFile(getFileName());
-    int row = 0;
+    // int row = 0;
 
     for (string s: data) {
         if (s != ""){

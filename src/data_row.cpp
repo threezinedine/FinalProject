@@ -216,13 +216,16 @@ IProperty* DataRow :: getCheckSum() {
 
 IProperty* DataRow :: getPropertyByIndex(int index) {
     int i = 0;
+    IProperty * result;
 
     for (IProperty *property: properties){
         if (i == index) {
-            return property;
+            result =  property;
+            break;
         }
         i ++;
     }
+    return result;
 }
 
 int DataRow :: getNumProperties() {

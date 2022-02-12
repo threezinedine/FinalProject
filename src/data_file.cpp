@@ -51,9 +51,9 @@ bool DataFile :: isFileExist() {
         return false;
     }
     else{
+        file.close();
         return true;
     }
-    file.close();
 }
 
 void DataFile :: save() {
